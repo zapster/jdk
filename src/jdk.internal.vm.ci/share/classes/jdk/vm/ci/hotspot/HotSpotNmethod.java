@@ -151,7 +151,7 @@ public class HotSpotNmethod extends HotSpotInstalledCode {
      * Invalidate this nmethod using the reason specified in {@code invalidationReason} and
      * optionally deoptimize the method if {@code deoptimize} is set.
      *
-     * @param deoptimize         whether or not to deoptimize the method.
+     * @param deoptimize whether or not to deoptimize the method.
      * @param invalidationReason invalidation reason code.
      */
     public void invalidate(boolean deoptimize, int invalidationReason) {
