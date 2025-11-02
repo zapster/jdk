@@ -34,12 +34,11 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.nio.ByteOrder;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import jdk.vm.ci.common.JVMCIError;
 import jdk.vm.ci.meta.Assumptions.AssumptionResult;
 import jdk.vm.ci.meta.Assumptions.ConcreteMethod;
@@ -57,6 +56,25 @@ import jdk.vm.ci.meta.ResolvedJavaType;
 import jdk.vm.ci.meta.UnresolvedJavaField;
 import jdk.vm.ci.meta.UnresolvedJavaType;
 import jdk.vm.ci.meta.annotation.AnnotationsInfo;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.nio.ByteOrder;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static java.util.Objects.requireNonNull;
+import static jdk.vm.ci.hotspot.CompilerToVM.compilerToVM;
+import static jdk.vm.ci.hotspot.HotSpotConstantPool.isSignaturePolymorphicHolder;
+import static jdk.vm.ci.hotspot.HotSpotJVMCIRuntime.runtime;
+import static jdk.vm.ci.hotspot.HotSpotModifiers.jvmClassModifiers;
+import static jdk.vm.ci.hotspot.HotSpotVMConfig.config;
+import static jdk.vm.ci.hotspot.UnsafeAccess.UNSAFE;
 
 /**
  * Implementation of {@link JavaType} for resolved non-primitive HotSpot classes. This class is not
@@ -790,6 +808,12 @@ final class HotSpotResolvedObjectTypeImpl extends HotSpotResolvedJavaType implem
             return offset;
         }
 
+        record Key(String name, String signature, boolean isStatic) {
+            static Key from(FieldInfo fi, HotSpotResolvedObjectTypeImpl holder) {
+                return new FieldInfo.Key(fi.getName(holder), fi.getSignature(holder), fi.isStatic());
+            }
+        }
+
         /**
          * Returns the name of this field as a {@link String}. If the field is an internal field the
          * name index is pointing into the vmSymbols table.
@@ -983,7 +1007,7 @@ final class HotSpotResolvedObjectTypeImpl extends HotSpotResolvedJavaType implem
         HotSpotVMConfig config = config();
         final long metaspaceAnnotations = UNSAFE.getAddress(getKlassPointer() + config.instanceKlassAnnotationsOffset);
         if (metaspaceAnnotations != 0) {
-            int annotationsOffset = typeAnnotations?config.annotationsClassTypeAnnotationsOffset: config.annotationsClassAnnotationsOffset;
+            int annotationsOffset = typeAnnotations ? config.annotationsClassTypeAnnotationsOffset : config.annotationsClassAnnotationsOffset;
             long classAnnotations = UNSAFE.getAddress(metaspaceAnnotations + annotationsOffset);
             return classAnnotations != 0;
         }
@@ -1211,7 +1235,7 @@ final class HotSpotResolvedObjectTypeImpl extends HotSpotResolvedJavaType implem
     }
 
     @Override
-    public AnnotationsInfo getDeclaredAnnotationInfo() {
+    public AnnotationsInfo getRawDeclaredAnnotationInfo() {
         if (!hasDirectAnnotations(false)) {
             return null;
         }
