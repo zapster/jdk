@@ -472,6 +472,11 @@ final class HotSpotResolvedObjectTypeImpl extends HotSpotResolvedJavaType implem
     }
 
     @Override
+    public boolean isHidden() {
+        return runtime().getMirror(this).isHidden();
+    }
+
+    @Override
     public boolean isInitialized() {
         return isArray() ? true : getInitState() == config().instanceKlassStateFullyInitialized;
     }
@@ -1015,30 +1020,6 @@ final class HotSpotResolvedObjectTypeImpl extends HotSpotResolvedJavaType implem
     }
 
     private static final Annotation[] NO_ANNOTATIONS = {};
-
-    @Override
-    public Annotation[] getAnnotations() {
-        if (!mayHaveAnnotations(true)) {
-            return NO_ANNOTATIONS;
-        }
-        return runtime().reflection.getAnnotations(this);
-    }
-
-    @Override
-    public Annotation[] getDeclaredAnnotations() {
-        if (!mayHaveAnnotations(false)) {
-            return NO_ANNOTATIONS;
-        }
-        return runtime().reflection.getDeclaredAnnotations(this);
-    }
-
-    @Override
-    public <T extends Annotation> T getAnnotation(Class<T> annotationClass) {
-        if (!mayHaveAnnotations(true)) {
-            return null;
-        }
-        return runtime().reflection.getAnnotation(this, annotationClass);
-    }
 
     /**
      * Performs a fast-path check that this type is resolved in the context of a given accessing
