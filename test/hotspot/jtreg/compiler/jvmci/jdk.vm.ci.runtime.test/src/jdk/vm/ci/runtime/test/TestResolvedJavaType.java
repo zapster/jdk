@@ -1389,9 +1389,6 @@ public class TestResolvedJavaType extends TypeUniverse {
         "newArray",
         "isInitialized",
         "isLinked",
-        "getJavaClass",
-        "getObjectHub",
-        "getHostClass",
         "hasFinalizableSubclass",
         "hasFinalizer",
         "isLocal",
@@ -1401,8 +1398,7 @@ public class TestResolvedJavaType extends TypeUniverse {
         "getEnclosingType",
         "lookupType",
         "isSealed", // tested with getPermittedSubclasses
-        "resolveField",
-        "$jacocoInit"
+        "resolveField"
     };
     // @formatter:on
 
