@@ -867,6 +867,7 @@
                                                                           \
   declare_constant(markWord::klass_shift)                                 \
   declare_constant(markWord::hash_shift)                                  \
+  declare_constant(markWord::hash_bits)                                   \
   declare_constant(markWord::monitor_value)                               \
                                                                           \
   declare_constant(markWord::lock_mask_in_place)                          \
@@ -877,6 +878,7 @@
   declare_constant(markWord::unlocked_value)                              \
   declare_constant(markWord::marked_value)                                \
                                                                           \
+  declare_constant(markWord::no_hash)                                     \
   declare_constant(markWord::no_hash_in_place)                            \
   declare_constant(markWord::no_lock_in_place)                            \
 

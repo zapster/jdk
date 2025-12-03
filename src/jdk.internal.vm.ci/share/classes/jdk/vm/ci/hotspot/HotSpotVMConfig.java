@@ -139,6 +139,8 @@ class HotSpotVMConfig extends HotSpotVMConfigAccess {
 
     private final int markWordNoHashInPlace = getConstant("markWord::no_hash_in_place", Integer.class);
     private final int markWordNoLockInPlace = getConstant("markWord::no_lock_in_place", Integer.class);
+    public final int markWordHashBits = getConstant("markWord::hash_bits", Integer.class);
+    public final int markWordNoHash = getConstant("markWord::no_hash", Integer.class);
 
     /**
      * See {@code markWord::prototype()}.
