@@ -10,7 +10,7 @@ local run_test_spec = 'test/hotspot/jtreg/compiler/jvmci test/jdk/tools/jlink/pl
 local common = import 'common.libsonnet';
 
 {
-    overlay: '3bc18600dc70191a267a14f17e817fd071a2d277',
+    overlay: '07f1592fa91e7c92a24ccdac14933322cafca457',
     specVersion: '3',
 
     local prebuild_artifact_url = 'jdk_tlda.archive.artifacts',
