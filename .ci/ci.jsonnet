@@ -70,7 +70,7 @@ local common = import 'common.libsonnet';
 
     # Creates a builder object. This builds all variants (i.e. jdk, llvm and static libs).
     #
-    # number major_java_version: major Java version (e.g. 25)
+    # number major_java_version: major Java version (e.g. 26)
     # string edition: "ce" or "ee"
     # object platform: details of a platform including the packages, docker image or devkit supplying the dependencies
     Build(major_java_version, edition, release, platform, static_libs, llvm, defs):: platform + common.mxDependencies + common.Packages {
@@ -420,8 +420,8 @@ local common = import 'common.libsonnet';
     ],
 
     DefineBuilds(defs)::
-        [self.BuildValidation(defs, conf, is_musl_build=false, graalvm_version=25.1) for conf in build_confs(defs)] +
-        [self.BuildValidation(defs, conf, is_musl_build=true, graalvm_version=25.1) for conf in amd64_musl_confs(defs)],
+        [self.BuildValidation(defs, conf, is_musl_build=false, graalvm_version='26.0') for conf in build_confs(defs)] +
+        [self.BuildValidation(defs, conf, is_musl_build=true, graalvm_version='26.0') for conf in amd64_musl_confs(defs)],
 
     CreateBuilds(major_java_version, releases, defs)::
         [self.Prebuild(major_java_version, release, defs) for release in releases] +
@@ -493,5 +493,5 @@ local common = import 'common.libsonnet';
         # Proxy server URL.
         proxy_url: 'http://proxy.acme.com:8090',
     },
-    builds: self.DefineBuilds(defs) + self.CreateBuilds(25, common.jvmci_releases, defs),
+    builds: self.DefineBuilds(defs) + self.CreateBuilds(26, common.jvmci_releases, defs),
 }

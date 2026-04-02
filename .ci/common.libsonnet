@@ -1,7 +1,7 @@
 {
     # The JVMCI releases that can be built from this repo.
     jvmci_releases:: [
-        self.JVMCIRelease(name='25.1', build='b16', jdk_version='25.0.2+10')
+        self.JVMCIRelease(name='26.0', build='b01', jdk_version='26+13')
     ],
 
     # Specifies a JVMCI release.
@@ -33,7 +33,7 @@
     clone(defs, repo, release, dst_dir, is_windows=false, is_closed=false):: [
         ['git', 'clone', '--config', 'core.autocrlf=input', '--quiet', defs.bitbucket_base_url + repo + '.git', dst_dir],
     ] + (if is_closed then [
-        ['git', '-C', dst_dir, 'checkout', 'jdk25'],
+        ['git', '-C', dst_dir, 'checkout', 'je/labsjdk26-replay'],
     ] else [
         ['git', '-C', dst_dir, 'checkout', '${MAIN_REVISION}'],
     ]),
@@ -182,7 +182,7 @@
     # devkit_platform_revisions in make/conf/jib-profiles.js
     get_devkit_platform_revisions(major_java_version, platform):: {
         local devkit_platform_revisions = {
-            '25': {
+            '26': {
                 linux_x64: 'gcc14.2.0-OL6.4+1.0',
                 macosx_x64: 'Xcode14.3.1+1.0',
                 windows_x64: 'VS2022-17.13.2+1.0',
