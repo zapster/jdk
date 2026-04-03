@@ -384,7 +384,7 @@ local common = import 'common.libsonnet';
                 '--clean-after-build',
                 '--uploader=disabled',
                 '--jdk-debug-level=' + jdk_debug_level,
-                '--jvmci-version=b01',
+                '--jvmci-version=b02',
                 '--graalvm-version=%s' % graalvm_version,
                 '--test=' + run_test_spec,
                 '--java-home-link-target=${%s}' % java_home_env_var,
