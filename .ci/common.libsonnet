@@ -25,15 +25,15 @@
     },
 
     # Version of the labsjdk-builder scripts to use
-    labsjdk_builder_version:: 'd80e57a52ed886c2222dc32a4390cd38f1b16ad0',
+    labsjdk_builder_version:: '9a10052b47f96766dd4248ecb29d0979a103a27f',
 
     # Clones a JDK repository
     # If `!is_closed`, then the cloned repo is checked out to branch ${MAIN_REVISION}.
-    # If `is_closed`, then the cloned repo is checked out to branch jdk25.
+    # If `is_closed`, then the cloned repo is checked out to branch jdk26.
     clone(defs, repo, release, dst_dir, is_windows=false, is_closed=false):: [
         ['git', 'clone', '--config', 'core.autocrlf=input', '--quiet', defs.bitbucket_base_url + repo + '.git', dst_dir],
     ] + (if is_closed then [
-        ['git', '-C', dst_dir, 'checkout', 'je/labsjdk26-replay'],
+        ['git', '-C', dst_dir, 'checkout', 'jdk26'],
     ] else [
         ['git', '-C', dst_dir, 'checkout', '${MAIN_REVISION}'],
     ]),
