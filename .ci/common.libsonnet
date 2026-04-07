@@ -25,7 +25,7 @@
     },
 
     # Version of the labsjdk-builder scripts to use
-    labsjdk_builder_version:: '74601ec2289554a6f4675c67564dc5c363cce3f8',
+    labsjdk_builder_version:: 'da469db30d3fc41a0656ae97f65fdb36b12f5cad',
 
     # Clones a JDK repository
     # If `!is_closed`, then the cloned repo is checked out to branch ${MAIN_REVISION}.
